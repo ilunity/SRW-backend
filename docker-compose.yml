@@ -1,0 +1,24 @@
+services:
+  server:
+    build: .
+    image: ilunity/server
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - ${PORT}:${PORT}
+
+  postgres:
+    image: postgres
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+
+volumes:
+  pgdata:
